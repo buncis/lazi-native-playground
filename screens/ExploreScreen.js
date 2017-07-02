@@ -37,6 +37,7 @@ class KelasPage extends React.Component {
                                                 </View>
                                                }
                                       avatar={{uri:item.avatar_url}}
+                                      onPress={() => this.props.navigation.navigate('KelasTab')}
                                     />}
         />
       </List>
