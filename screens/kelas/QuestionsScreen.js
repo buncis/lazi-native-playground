@@ -6,19 +6,19 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-export default class Home extends React.Component {
+export default class QuestionsScreen extends React.Component {
   static navigationOptions = {
     headerTintColor: 'white',
     headerStyle: {
          backgroundColor:"midnightblue"
        },
-    title: 'Home',
+    title: 'Question',
   };
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={{flex:1, backgroundColor: '#4286f4'}}>
-        <Text>Hello, Navigation!</Text>
+      <View style={{flex:1, backgroundColor: '#009faf'}}>
+        <Text>Hello, Question Pago!!</Text>
         </View>
     );
   }
