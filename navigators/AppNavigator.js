@@ -10,6 +10,7 @@ import QuestionsScreen from '../screens/kelas/QuestionsScreen'
 import VideosScreen from '../screens/kelas/VideosScreen'
 import MaterisScreen from '../screens/kelas/MaterisScreen'
 import MembersScreen from '../screens/kelas/MembersScreen'
+import KelasForm from '../screens/forms/KelasForm'
 
 const KelasTab = TabNavigator ({
   KelasScreen: { screen: KelasScreen },
@@ -29,7 +30,8 @@ const MainTab = TabNavigator ({
 
 const AppNavigator = StackNavigator ( {
   MainTab: { screen: MainTab},
-  KelasTab: { screen: KelasTab}
+  KelasTab: { screen: KelasTab},
+  KelasForm: { screen: KelasForm}
 })
 
 export default AppNavigator;
