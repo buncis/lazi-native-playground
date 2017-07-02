@@ -5,7 +5,6 @@ import { NavigationComponent } from 'react-native-material-bottom-navigation'
 import HomeScreen from '../screens/HomeScreen'
 import ExploreScreen from '../screens/ExploreScreen'
 
-
 import KelasScreen from '../screens/kelas/KelasScreen'
 import QuestionsScreen from '../screens/kelas/QuestionsScreen'
 import VideosScreen from '../screens/kelas/VideosScreen'

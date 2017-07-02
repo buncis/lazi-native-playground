@@ -12,7 +12,7 @@ export default class KelasScreen extends React.Component {
     headerStyle: {
          backgroundColor:"midnightblue"
        },
-    title: 'Materi',
+    title: 'Home',
   };
   render() {
     const { navigate } = this.props.navigation;

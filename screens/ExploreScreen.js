@@ -22,25 +22,39 @@ class KelasPage extends React.Component {
   
   render () {
     return (
-      <List>
-        <FlatList
-            data={this.props.kelases}
-            keyExtractor={item => item.id}
-            renderItem={({item}) => <ListItem
-                                      roundAvatar
-                                      key={item.id}
-                                      title={item.name}
-                                      subtitle={<View 
-                                                  style={styles.subtitleView}>
-                                                  <Text>emapt puluh</Text>
-                                                  <Text>Tepat dibawahnya</Text>
-                                                </View>
-                                               }
-                                      avatar={{uri:item.avatar_url}}
-                                      onPress={() => this.props.navigation.navigate('KelasTab')}
-                                    />}
-        />
-      </List>
+      <View style={{flex:1, backgroundColor: '#4286f4'}}>
+        <List>
+          <FlatList
+              data={this.props.kelases}
+              keyExtractor={item => item.id}
+              renderItem={({item}) => <ListItem
+                                        roundAvatar
+                                        key={item.id}
+                                        title={item.name}
+                                        subtitle={<View 
+                                                    style={styles.subtitleView}>
+                                                    <Text>emapt puluh</Text>
+                                                    <Text>Tepat dibawahnya</Text>
+                                                  </View>
+                                                }
+                                        avatar={{uri:item.avatar_url}}
+                                        onPress={() => this.props.navigation.navigate('KelasTab')}
+                                      />}
+          />
+        </List>
+        <ActionButton 
+          buttonColor="rgba(231,76,60,1)">
+          <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
+            <Icon name="md-create" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => {}}>
+            <Icon name="md-notifications-off" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => {}}>
+            <Icon name="md-done-all" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
+      </View>
     )
   }
 }
