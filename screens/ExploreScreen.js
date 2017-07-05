@@ -17,6 +17,7 @@ class KelasPage extends React.Component {
   };
 
   componentDidMount(){
+    console.log("liatnihyah");
     this.props.fetchKelases();
   }
   

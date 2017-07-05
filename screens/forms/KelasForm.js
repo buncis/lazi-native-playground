@@ -9,7 +9,8 @@ import t from 'tcomb-form-native';
 import { connect } from 'react-redux';
 import { saveKelas } from '../../actions';
 import Spinner from 'react-native-loading-spinner-overlay';
-import DropdownAlert from 'react-native-dropdownalert'
+import DropdownAlert from 'react-native-dropdownalert';
+import { NavigationActions } from 'react-navigation';
 
 const Form = t.form.Form;
 
@@ -27,7 +28,8 @@ const options = {};
 class KelasForm extends React.Component {
   state = {
     loading: false,
-    errors: {}
+    errors: {},
+    done: false
   }
 
   static navigationOptions = {
@@ -44,7 +46,7 @@ class KelasForm extends React.Component {
     if (value) {
       this.setState({ loading: true });
       this.props.saveKelas(value).then(
-        () => {},
+        () => { this.setState({ done: true })},
         (err) => err.response.json().then(({errors}) => 
           {
             this.dropdown.alertWithType('error', 'Error', errors.icon.toString());
@@ -58,8 +60,9 @@ class KelasForm extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    return (
-      <View style={{flex:1}}>
+    const backAction = NavigationActions.back({})
+    const form =(
+      <View>
         <Spinner visible={this.state.loading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
         <Form
           ref="form"
@@ -73,6 +76,12 @@ class KelasForm extends React.Component {
         </Button>
         <DropdownAlert
           ref={(ref) => this.dropdown = ref}/>
+      </View>
+    );
+    
+    return (
+       <View style={{flex:1}}>
+        { this.state.done ? this.props.navigation.dispatch(backAction) : form}
       </View>
     );
   }
