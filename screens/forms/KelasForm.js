@@ -9,6 +9,7 @@ import t from 'tcomb-form-native';
 import { connect } from 'react-redux';
 import { saveKelas } from '../../actions';
 import Spinner from 'react-native-loading-spinner-overlay';
+import DropdownAlert from 'react-native-dropdownalert'
 
 const Form = t.form.Form;
 
@@ -25,7 +26,8 @@ const options = {};
 
 class KelasForm extends React.Component {
   state = {
-    loading: false
+    loading: false,
+    errors: {}
   }
 
   static navigationOptions = {
@@ -37,12 +39,18 @@ class KelasForm extends React.Component {
   };
 
   onPressur = () => {
+    let errors = {};
     const value = this.refs.form.getValue();
     if (value) {
       this.setState({ loading: true });
       this.props.saveKelas(value).then(
         () => {},
-        (err) => err.response.json().then(({errors}) => this.setState({ errors, loading: false })) 
+        (err) => err.response.json().then(({errors}) => 
+          {
+            this.dropdown.alertWithType('error', 'Error', errors.icon.toString());
+            this.setState({loading: false});
+          }
+        ) 
       )
     }
     
@@ -63,6 +71,8 @@ class KelasForm extends React.Component {
           underlayColor='#99d9f4'
           title="Save">
         </Button>
+        <DropdownAlert
+          ref={(ref) => this.dropdown = ref}/>
       </View>
     );
   }
