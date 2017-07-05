@@ -17,13 +17,29 @@ export function setKelases(kelases) {
   }
 }
 
+export function addKelas(kelas) {
+  return {
+    type: ADD_KELAS,
+    kelas
+  }
+}
+
+export function saveKelas(data) {
+  return dispatch => {
+    return fetch ('http://192.168.0.19:3000/lists.json', {
+      method: 'post',
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+  }
+}
+
 export function fetchKelases(){
   return dispatch => {
     fetch('http://192.168.0.19:3000/lists.json')
     .then(res => res.json())
-    .then(data => dispatch(setKelases(data.lists)))
-    .catch(error => {
-                console.log('ERRORNYA():Error Stack: ' + error.stack);
-            });
+    .then(data => dispatch(setKelases(data.lists)));
   }
 }
