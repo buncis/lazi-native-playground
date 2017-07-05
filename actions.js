@@ -32,7 +32,7 @@ export function saveKelas(data) {
       headers: {
         "Content-Type": "application/json"
       }
-    })
+    }).then(handleResponse);
   }
 }
 

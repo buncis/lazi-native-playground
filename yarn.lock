@@ -4280,6 +4280,10 @@ react-native-elements@^0.13.0:
   dependencies:
     eventemitter3 "^2.0.2"
 
+react-native-loading-spinner-overlay@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/react-native-loading-spinner-overlay/-/react-native-loading-spinner-overlay-0.5.0.tgz#2f06c14da24139303ff95364f4b9de8ab1cacc97"
+
 "react-native-maps@https://github.com/expo/react-native-maps/archive/v0.15.2.tar.gz":
   version "0.15.2"
   resolved "https://github.com/expo/react-native-maps/archive/v0.15.2.tar.gz#e6a022511fbb53d0db5029dc0b159dd194a3763f"
@@ -4314,6 +4318,10 @@ react-native-scripts@0.0.40:
 react-native-side-menu@^0.20.1:
   version "0.20.3"
   resolved "https://registry.yarnpkg.com/react-native-side-menu/-/react-native-side-menu-0.20.3.tgz#5dffe3e237018360ed081433d505ea454cba9ca4"
+
+react-native-spinkit@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-spinkit/-/react-native-spinkit-1.0.3.tgz#5e83e26a3598a94f45102ee15bd918efa673c76d"
 
 "react-native-svg@https://github.com/expo/react-native-svg/archive/5.2.0-exp.0.tar.gz":
   version "5.2.0"

@@ -8,6 +8,7 @@ import { StackNavigator } from 'react-navigation';
 import t from 'tcomb-form-native';
 import { connect } from 'react-redux';
 import { saveKelas } from '../../actions';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 const Form = t.form.Form;
 
@@ -26,7 +27,7 @@ class KelasForm extends React.Component {
   state = {
     loading: false
   }
-  
+
   static navigationOptions = {
     headerTintColor: 'white',
     headerStyle: {
@@ -37,17 +38,21 @@ class KelasForm extends React.Component {
 
   onPressur = () => {
     const value = this.refs.form.getValue();
-    // if (value) {
-    //   console.log(value);
-    //   this.props.saveKelas(value);
-    // }
-    this.setState({ loading: true });
+    if (value) {
+      this.setState({ loading: true });
+      this.props.saveKelas(value).then(
+        () => {},
+        (err) => err.response.json().then(({errors}) => this.setState({ errors, loading: false })) 
+      )
+    }
+    
   }
 
   render() {
     const { navigate } = this.props.navigation;
     return (
       <View style={{flex:1}}>
+        <Spinner visible={this.state.loading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
         <Form
           ref="form"
           type={List}
