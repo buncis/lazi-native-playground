@@ -17,7 +17,6 @@ class KelasPage extends React.Component {
   };
 
   componentDidMount(){
-    console.log("liatnihyah");
     this.props.fetchKelases();
   }
   
@@ -31,11 +30,11 @@ class KelasPage extends React.Component {
               renderItem={({item}) => <ListItem
                                         roundAvatar
                                         key={item.id}
-                                        title={item.name}
+                                        title={item.title}
                                         subtitle={<View 
                                                     style={styles.subtitleView}>
-                                                    <Text>emapt puluh</Text>
-                                                    <Text>Tepat dibawahnya</Text>
+                                                    <Text>{item.subtitle}</Text>
+                                                    <Text>{item.name}</Text>
                                                   </View>
                                                 }
                                         avatar={{uri:item.avatar_url}}

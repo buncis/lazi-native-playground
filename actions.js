@@ -1,4 +1,5 @@
-export const SET_KELASES = 'SET_KELASES'
+export const SET_KELASES = 'SET_KELASES';
+export const ADD_KELAS = 'ADD_KELAS';
 
 function handleResponse(response) {
   if (response.ok) {
@@ -32,7 +33,8 @@ export function saveKelas(data) {
       headers: {
         "Content-Type": "application/json"
       }
-    }).then(handleResponse);
+    }).then(handleResponse)
+    .then(data => dispatch(addKelas(data)));
   }
 }
 

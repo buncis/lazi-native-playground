@@ -24,12 +24,14 @@ const List = t.struct({
 
 const options = {};
 
+const backAction = NavigationActions.back({
+    key: null
+})
 
 class KelasForm extends React.Component {
   state = {
     loading: false,
-    errors: {},
-    done: false
+    errors: {}
   }
 
   static navigationOptions = {
@@ -41,26 +43,25 @@ class KelasForm extends React.Component {
   };
 
   onPressur = () => {
+    // this.props.navigation.dispatch(backAction)
     let errors = {};
     const value = this.refs.form.getValue();
     if (value) {
       this.setState({ loading: true });
       this.props.saveKelas(value).then(
-        () => { this.setState({ done: true })},
+        () => { this.setState({ loading: false }),
+                this.props.navigation.dispatch(backAction)},
         (err) => err.response.json().then(({errors}) => 
           {
-            this.dropdown.alertWithType('error', 'Error', errors.icon.toString());
             this.setState({loading: false});
+            this.dropdown.alertWithType('error', 'Error', errors.icon.toString());
           }
         ) 
       )
     }
-    
   }
 
   render() {
-    const { navigate } = this.props.navigation;
-    const backAction = NavigationActions.back({})
     const form =(
       <View>
         <Spinner visible={this.state.loading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
@@ -81,7 +82,7 @@ class KelasForm extends React.Component {
     
     return (
        <View style={{flex:1}}>
-        { this.state.done ? this.props.navigation.dispatch(backAction) : form}
+        {form}
       </View>
     );
   }
