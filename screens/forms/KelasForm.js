@@ -8,7 +8,7 @@ import {
 import { StackNavigator } from 'react-navigation';
 import t from 'tcomb-form-native';
 import { connect } from 'react-redux';
-import { saveKelas, fetchKelas } from '../../actions';
+import { saveKelas, fetchKelas, updateKelas } from '../../actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { NavigationActions } from 'react-navigation';
 
@@ -61,23 +61,44 @@ class KelasForm extends React.Component {
     const value = this.refs.form.getValue();
     if (value) {
       this.setState({ loading: true });
-      this.props.saveKelas(value).then(
-        () => { this.setState({ loading: false }),
-                this.props.navigation.dispatch(backAction)},
-        (err) => err.response.json().then(({errors}) => 
-          {
-            this.setState({loading: false});
-            Alert.alert(
-              'Error',
-              errors.icon.toString(),
-              [
-                {text: 'OK', onPress: () => console.log('OK Pressed')},
-              ],
-              { cancelable: false }
-            )
-          }
-        ) 
-      )
+      if (this.props.navigation.state.params.id) {
+        this.props.updateKelas(this.props.navigation.state.params.id,value).then(
+          () => { this.setState({ loading: false }),
+                  this.props.navigation.dispatch(backAction)},
+          (err) => err.response.json().then(({errors}) => 
+            {
+              this.setState({loading: false});
+              Alert.alert(
+                'Error',
+                errors.icon.toString(),
+                [
+                  {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ],
+                { cancelable: false }
+              )
+            }
+          ) 
+        )
+      } else {
+        this.props.saveKelas(value).then(
+          () => { this.setState({ loading: false }),
+                  this.props.navigation.dispatch(backAction)},
+          (err) => err.response.json().then(({errors}) => 
+            {
+              this.setState({loading: false});
+              Alert.alert(
+                'Error',
+                errors.icon.toString(),
+                [
+                  {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ],
+                { cancelable: false }
+              )
+            }
+          ) 
+        )
+      }
+      
     }
   }
 
@@ -116,5 +137,5 @@ const mapStateToProps = (state,props) => {
   return { kelas: null };
 }
 
-export default connect(mapStateToProps, { fetchKelas, saveKelas })(KelasForm);
+export default connect(mapStateToProps, { fetchKelas, saveKelas, updateKelas })(KelasForm);
 

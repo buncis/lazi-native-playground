@@ -1,6 +1,7 @@
 export const SET_KELASES = 'SET_KELASES';
 export const ADD_KELAS = 'ADD_KELAS';
 export const SET_KELAS = 'SET_KELAS';
+export const KELAS_UPDATED = 'KELAS_UPDATED';
 
 function handleResponse(response) {
   if (response.ok) {
@@ -35,7 +36,33 @@ export function saveKelas(data) {
         "Content-Type": "application/json"
       }
     }).then(handleResponse)
-    .then(data => dispatch(addKelas(data)));
+    .then(data => dispatch(addKelas(data)))
+    .catch(error => {
+			console.log('Fetch Kelases', error); //eslint-disable-line
+		});
+  }
+}
+
+export function kelasUpdated(kelas) {
+  return {
+    type: KELAS_UPDATED,
+    kelas
+  }
+}
+
+export function updateKelas(id, data) {
+  return dispatch => {
+    return fetch (`http://192.168.0.19:3000/lists/${id}.json`, {
+      method: 'put',
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(handleResponse)
+    .then(data => dispatch(kelasUpdated(data)))
+    .catch(error => {
+			console.log('Fetch Kelases', error); //eslint-disable-line
+		});
   }
 }
 
