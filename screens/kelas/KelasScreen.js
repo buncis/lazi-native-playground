@@ -33,15 +33,19 @@ class KelasScreen extends React.Component {
         <Text>{this.props.kelas.subtitle}</Text>
         <Text>{this.props.kelas.title}</Text>
         <Text>{this.props.kelas.name}</Text>
-
-        </View>
+        <Button
+          onPress={() => this.props.navigation.navigate('KelasForm', {id: this.props.kelas.id})}
+          title={"Edit user dengan ID: " + this.props.kelas.id}
+          color="#841584"
+        />
+      </View>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    kelas: state.kelases
+    kelas: state.kelas
   }
 }
 

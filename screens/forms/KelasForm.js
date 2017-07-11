@@ -33,7 +33,7 @@ class KelasForm extends React.Component {
     loading: false,
     errors: {}
   }
-
+  
   static navigationOptions = {
     headerTintColor: 'white',
     headerStyle: {
@@ -43,12 +43,20 @@ class KelasForm extends React.Component {
   };
 
   componentDidMount(){
-    this.props.fetchKelas(this.props.navigation.state.params.id);
-    // console.log("KEMOUNT");
+    if (this.props.navigation.state.params){
+      this.props.fetchKelas(this.props.navigation.state.params.id);
+    };
   }
   
+  default_value = {
+    title: this.props.kelas ? this.props.kelas.title : '',         
+    icon: this.props.kelas ? this.props.kelas.icon : '',  
+    name: this.props.kelas ? this.props.kelas.name : '',                
+    subtitle: this.props.kelas ? this.props.kelas.subtitle : '',  
+    avatar_url: this.props.kelas ? this.props.kelas.avatar_url : ''
+  }
+
   onPressur = () => {
-    // this.props.navigation.dispatch(backAction)
     let errors = {};
     const value = this.refs.form.getValue();
     if (value) {
@@ -81,6 +89,7 @@ class KelasForm extends React.Component {
           ref="form"
           type={List}
           options={options}
+          value={this.default_value}
         />
         <Button 
           onPress={this.onPressur} 
@@ -98,10 +107,13 @@ class KelasForm extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    kelas: state.kelases
+const mapStateToProps = (state,props) => {
+  if ( props.navigation.state.params !== undefined) {
+    return {
+      kelas: state.kelas
+    }
   }
+  return { kelas: null };
 }
 
 export default connect(mapStateToProps, { fetchKelas, saveKelas })(KelasForm);
