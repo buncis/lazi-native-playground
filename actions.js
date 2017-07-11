@@ -1,5 +1,6 @@
 export const SET_KELASES = 'SET_KELASES';
 export const ADD_KELAS = 'ADD_KELAS';
+export const SET_KELAS = 'SET_KELAS';
 
 function handleResponse(response) {
   if (response.ok) {
@@ -42,6 +43,27 @@ export function fetchKelases(){
   return dispatch => {
     fetch('http://192.168.0.19:3000/lists.json')
     .then(res => res.json())
-    .then(data => dispatch(setKelases(data.lists)));
+    .then(data => dispatch(setKelases(data.lists)))
+    .catch(error => {
+			console.log('Fetch Kelases', error); //eslint-disable-line
+		});
+  }
+}
+
+export function setKelas(kelas) {
+  return {
+    type: SET_KELAS,
+    kelas
+  }
+}
+
+export function fetchKelas(id){
+  return dispatch => {
+    fetch(`http://192.168.0.19:3000/lists/${id}.json`)
+    .then(res => res.json())
+    .then(data => dispatch(setKelas(data.list)))
+    .catch(error => {
+			console.log('Fetch Kelas', error); //eslint-disable-line
+		});
   }
 }

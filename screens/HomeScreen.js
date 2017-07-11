@@ -18,8 +18,6 @@ export default class Home extends React.Component {
   };
   render() {
     const { navigate } = this.props.navigation;
-
-
     return (
       <View style={{flex:1, backgroundColor: '#4286f4'}}>
         <Text>Lontong</Text>

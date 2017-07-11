@@ -8,7 +8,7 @@ import {
 import { StackNavigator } from 'react-navigation';
 import t from 'tcomb-form-native';
 import { connect } from 'react-redux';
-import { saveKelas } from '../../actions';
+import { saveKelas, fetchKelas } from '../../actions';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { NavigationActions } from 'react-navigation';
 
@@ -42,6 +42,11 @@ class KelasForm extends React.Component {
     title: 'Tambah Kelas Baru',
   };
 
+  componentDidMount(){
+    this.props.fetchKelas(this.props.navigation.state.params.id);
+    // console.log("KEMOUNT");
+  }
+  
   onPressur = () => {
     // this.props.navigation.dispatch(backAction)
     let errors = {};
@@ -93,5 +98,11 @@ class KelasForm extends React.Component {
   }
 }
 
-export default connect(null, { saveKelas })(KelasForm);
+const mapStateToProps = (state) => {
+  return {
+    kelas: state.kelases
+  }
+}
+
+export default connect(mapStateToProps, { fetchKelas, saveKelas })(KelasForm);
 
