@@ -5,7 +5,12 @@ import {
   Text,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { fetchKelas } from '../../actions';
+import { fetchKelas, deleteKelas } from '../../actions';
+import { NavigationActions } from 'react-navigation';
+
+const backAction = NavigationActions.back({
+    key: null
+})
 
 class KelasScreen extends React.Component {
   static navigationOptions = {
@@ -20,6 +25,26 @@ class KelasScreen extends React.Component {
     this.props.fetchKelas(this.props.navigation.state.params.id);
     // console.log("KEMOUNT");
   }
+
+  onPressur = () => {
+    this.props.deleteKelas(this.props.kelas.id).then(
+      () => {this.props.navigation.dispatch(backAction)},
+      (err) => err.response.json().then(({errors}) => 
+        {
+          this.setState({loading: false});
+          Alert.alert(
+            'Error',
+            errors.icon.toString(),
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ],
+            { cancelable: false }
+          )
+        }
+      ) 
+    )
+  }
+      
 
   render() {
     const { navigate } = this.props.navigation;
@@ -38,6 +63,11 @@ class KelasScreen extends React.Component {
           title={"Edit user dengan ID: " + this.props.kelas.id}
           color="#841584"
         />
+        <Button
+          onPress={this.onPressur}
+          title={"Delete user dengan ID: " + this.props.kelas.id}
+          color="red"
+        />
       </View>
     );
   }
@@ -49,4 +79,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchKelas })(KelasScreen);
+export default connect(mapStateToProps, { fetchKelas, deleteKelas })(KelasScreen);

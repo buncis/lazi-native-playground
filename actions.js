@@ -2,10 +2,11 @@ export const SET_KELASES = 'SET_KELASES';
 export const ADD_KELAS = 'ADD_KELAS';
 export const SET_KELAS = 'SET_KELAS';
 export const KELAS_UPDATED = 'KELAS_UPDATED';
+export const KELAS_DELETED = 'KELAS_DELETED';
 
 function handleResponse(response) {
   if (response.ok) {
-    return response.json();
+    return response.json()
   } else {
     let error = new Error(response.statusText);
     error.response = response;
@@ -17,6 +18,28 @@ export function setKelases(kelases) {
   return {
     type: SET_KELASES,
     kelases
+  }
+}
+
+export function kelasDeleted(kelasId) {
+  return {
+    type: KELAS_DELETED,
+    kelasId
+  }
+}
+
+export function deleteKelas(id) {
+  return dispatch => {
+    return fetch(`http://192.168.0.19:3000/lists/${id}.json`, {
+      method: 'delete',
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then(data => dispatch(kelasDeleted(id)))
+    .catch(error => {
+			console.log('delete Kelas', error); //eslint-disable-line
+		});
   }
 }
 
@@ -38,7 +61,7 @@ export function saveKelas(data) {
     }).then(handleResponse)
     .then(data => dispatch(addKelas(data)))
     .catch(error => {
-			console.log('Fetch Kelases', error); //eslint-disable-line
+			console.log('Save Kelas', error); //eslint-disable-line
 		});
   }
 }
@@ -61,7 +84,7 @@ export function updateKelas(id, data) {
     }).then(handleResponse)
     .then(data => dispatch(kelasUpdated(data)))
     .catch(error => {
-			console.log('Fetch Kelases', error); //eslint-disable-line
+			console.log('updateKelas', error); //eslint-disable-line
 		});
   }
 }

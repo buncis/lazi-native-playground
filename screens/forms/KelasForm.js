@@ -61,7 +61,7 @@ class KelasForm extends React.Component {
     const value = this.refs.form.getValue();
     if (value) {
       this.setState({ loading: true });
-      if (this.props.navigation.state.params.id) {
+      if (this.props.navigation.state.params) {
         this.props.updateKelas(this.props.navigation.state.params.id,value).then(
           () => { this.setState({ loading: false }),
                   this.props.navigation.dispatch(backAction)},
