@@ -5,7 +5,9 @@ export const KELAS_UPDATED = 'KELAS_UPDATED';
 export const KELAS_DELETED = 'KELAS_DELETED';
 
 function handleResponse(response) {
-  if (response.ok) {
+  if (response.status === 204){
+    return;
+  } else if (response.ok) {
     return response.json()
   } else {
     let error = new Error(response.statusText);
@@ -36,6 +38,7 @@ export function deleteKelas(id) {
         "Content-Type": "application/json"
       }
     })
+    .then(handleResponse)
     .then(data => dispatch(kelasDeleted(id)))
     .catch(error => {
 			console.log('delete Kelas', error); //eslint-disable-line
