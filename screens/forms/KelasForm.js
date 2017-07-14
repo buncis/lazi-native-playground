@@ -24,8 +24,11 @@ const List = t.struct({
 
 const options = {};
 
-const backAction = NavigationActions.back({
-    key: null
+const resetAction = NavigationActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({ routeName: 'MainTab'})
+  ]
 })
 
 class KelasForm extends React.Component {
@@ -64,7 +67,7 @@ class KelasForm extends React.Component {
       if (this.props.navigation.state.params) {
         this.props.updateKelas(this.props.navigation.state.params.id,value).then(
           () => { this.setState({ loading: false }),
-                  this.props.navigation.dispatch(backAction)},
+                  this.props.navigation.dispatch(resetAction)},
           (err) => err.response.json().then(({errors}) => 
             {
               this.setState({loading: false});
@@ -82,7 +85,7 @@ class KelasForm extends React.Component {
       } else {
         this.props.saveKelas(value).then(
           () => { this.setState({ loading: false }),
-                  this.props.navigation.dispatch(backAction)},
+                  this.props.navigation.dispatch(resetAction)},
           (err) => err.response.json().then(({errors}) => 
             {
               this.setState({loading: false});
