@@ -1,20 +1,23 @@
 import React from 'react';
 import { List, ListItem } from 'react-native-elements'
-import { FlatList, View, StyleSheet, Text } from 'react-native';
+import { FlatList, View, StyleSheet, Text, Button } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import { fetchKelases } from '../actions'
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 
+const dipencet = () => console.log("dipencet");
+
 class KelasPage extends React.Component {
-  static navigationOptions = {
+  static navigationOptions = ({navigation}) => ({
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor:"midnightblue"
     },
     title: 'Explore',
-  };
+    headerRight: <Button title="Info" onPress={() => navigation.navigate('Step1')}/>,
+  });
 
   componentDidMount(){
     this.props.fetchKelases();

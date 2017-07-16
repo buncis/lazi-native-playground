@@ -15,11 +15,8 @@ import { NavigationActions } from 'react-navigation';
 const Form = t.form.Form;
 
 const Step1 = t.struct({
-  title: t.String,            
-  icon: t.String,  
-  name: t.String,                
+  title: t.String,                         
   subtitle: t.String,  
-  avatar_url: t.String
 });
 
 const options = {};
@@ -37,13 +34,14 @@ class KelasForm extends React.Component {
     errors: {}
   }
   
-  static navigationOptions = {
+  static navigationOptions = ({ navigation }) => ({
     headerTintColor: 'white',
     headerStyle: {
          backgroundColor:"midnightblue"
        },
-    title: 'Tambah Kelas Baru',
-  };
+    title: 'Step1',
+    headerRight: <Button title="Next" onPress={() => navigation.navigate('Step2')}/>,
+  });
 
   componentDidMount(){
     if (this.props.navigation.state.params){
@@ -111,9 +109,8 @@ class KelasForm extends React.Component {
         <Spinner visible={this.state.loading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
         <Form
           ref="form"
-          type={List}
+          type={Step1}
           options={options}
-          value={this.default_value}
         />
         <Button 
           onPress={this.onPressur} 
