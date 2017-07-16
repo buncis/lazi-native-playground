@@ -34,26 +34,26 @@ class KelasForm extends React.Component {
     errors: {}
   }
   
-  static navigationOptions = ({ navigation }) => ({
+  static navigationOptions = ({ navigation, state }) => ({
     headerTintColor: 'white',
     headerStyle: {
          backgroundColor:"midnightblue"
        },
     title: 'Step 3',
-    headerRight: <Button title="Next" onPress={() => _this.onPress()}/>,
+    headerRight: <Button title="Save" onPress={() => navigation.state.params.handleSave()} />
   });
-
-  componentDidMount(){
-    _this = this;
-  }
-
-  onPress = () => {
-    var value = this.refs.form.getValue();
-    if (value) { // if validation fails, value will be null
-      console.log(value); // value here is an instance of Person
-       this.props.navigation.navigate('Step4')
+  
+    onPress = () => {
+      var value = this.refs.form.getValue();
+      if (value) { // if validation fails, value will be null
+        console.log(value); // value here is an instance of Person
+        this.props.navigation.navigate('Step4')
+      }
     }
-  }
+
+    componentDidMount() {
+      this.props.navigation.setParams({ handleSave: this.onPress });
+    }
   
   default_value = {
     title: this.props.kelas ? this.props.kelas.title : '',         
