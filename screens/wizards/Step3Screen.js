@@ -27,6 +27,7 @@ const resetAction = NavigationActions.reset({
   ]
 })
 
+let _this = null;
 class KelasForm extends React.Component {
   state = {
     loading: false,
@@ -39,13 +40,19 @@ class KelasForm extends React.Component {
          backgroundColor:"midnightblue"
        },
     title: 'Step 3',
-    headerRight: <Button title="Next" onPress={() => navigation.navigate('Step4')}/>,
+    headerRight: <Button title="Next" onPress={() => _this.onPress()}/>,
   });
 
   componentDidMount(){
-    if (this.props.navigation.state.params){
-      this.props.fetchKelas(this.props.navigation.state.params.id);
-    };
+    _this = this;
+  }
+
+  onPress = () => {
+    var value = this.refs.form.getValue();
+    if (value) { // if validation fails, value will be null
+      console.log(value); // value here is an instance of Person
+       this.props.navigation.navigate('Step4')
+    }
   }
   
   default_value = {

@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  View,
-  Text,
-  Alert
-} from 'react-native';
+import { Button, View, Text, Alert } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import t from 'tcomb-form-native';
 import { connect } from 'react-redux';
@@ -19,8 +14,6 @@ const Step1 = t.struct({
   subtitle: t.String,  
 });
 
-const options = {};
-
 const resetAction = NavigationActions.reset({
   index: 0,
   actions: [
@@ -28,11 +21,9 @@ const resetAction = NavigationActions.reset({
   ]
 })
 
-class KelasForm extends React.Component {
-  state = {
-    loading: false,
-    errors: {}
-  }
+let _this = null;
+
+export default class KelasForm extends React.Component {
   
   static navigationOptions = ({ navigation }) => ({
     headerTintColor: 'white',
@@ -40,102 +31,30 @@ class KelasForm extends React.Component {
          backgroundColor:"midnightblue"
        },
     title: 'Step1',
-    headerRight: <Button title="Next" onPress={() => navigation.navigate('Step2')}/>,
+    headerRight: <Button title="Next" onPress={() => _this.onPress()}/>,
   });
 
   componentDidMount(){
-    if (this.props.navigation.state.params){
-      this.props.fetchKelas(this.props.navigation.state.params.id);
-    };
-  }
-  
-  default_value = {
-    title: this.props.kelas ? this.props.kelas.title : '',         
-    icon: this.props.kelas ? this.props.kelas.icon : '',  
-    name: this.props.kelas ? this.props.kelas.name : '',                
-    subtitle: this.props.kelas ? this.props.kelas.subtitle : '',  
-    avatar_url: this.props.kelas ? this.props.kelas.avatar_url : ''
+    _this = this;
   }
 
-  onPressur = () => {
-    let errors = {};
-    const value = this.refs.form.getValue();
-    if (value) {
-      this.setState({ loading: true });
-      if (this.props.navigation.state.params) {
-        this.props.updateKelas(this.props.navigation.state.params.id,value).then(
-          () => { this.setState({ loading: false }),
-                  this.props.navigation.dispatch(resetAction)},
-          (err) => err.response.json().then(({errors}) => 
-            {
-              this.setState({loading: false});
-              Alert.alert(
-                'Error',
-                errors.icon.toString(),
-                [
-                  {text: 'OK', onPress: () => console.log('OK Pressed')},
-                ],
-                { cancelable: false }
-              )
-            }
-          ) 
-        )
-      } else {
-        this.props.saveKelas(value).then(
-          () => { this.setState({ loading: false }),
-                  this.props.navigation.dispatch(resetAction)},
-          (err) => err.response.json().then(({errors}) => 
-            {
-              this.setState({loading: false});
-              Alert.alert(
-                'Error',
-                errors.icon.toString(),
-                [
-                  {text: 'OK', onPress: () => console.log('OK Pressed')},
-                ],
-                { cancelable: false }
-              )
-            }
-          ) 
-        )
-      }
-      
+  onPress = () => {
+    var value = this.refs.form.getValue();
+    if (value) { // if validation fails, value will be null
+      console.log(value); // value here is an instance of Person
+       this.props.navigation.navigate('Step2')
     }
   }
 
   render() {
-    const form =(
-      <View>
-        <Spinner visible={this.state.loading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+    return (
+      <View style={{flex:1}}>
         <Form
           ref="form"
           type={Step1}
-          options={options}
         />
-        <Button 
-          onPress={this.onPressur} 
-          underlayColor='#99d9f4'
-          title="Save">
-        </Button>
-      </View>
-    );
-    
-    return (
-       <View style={{flex:1}}>
-        {form}
+        <Button title="Diteken" onPress={this.onPress}></Button>
       </View>
     );
   }
 }
-
-const mapStateToProps = (state,props) => {
-  if ( props.navigation.state.params !== undefined) {
-    return {
-      kelas: state.kelas
-    }
-  }
-  return { kelas: null };
-}
-
-export default connect(mapStateToProps, { fetchKelas, saveKelas, updateKelas })(KelasForm);
-

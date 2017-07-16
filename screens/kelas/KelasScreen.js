@@ -53,7 +53,7 @@ class KelasScreen extends React.Component {
         <Text>Hello, Ini kelasnya kalo dipencet</Text>
         <Text>Aturan bawahnya ano tabnya ok</Text>
         <Text>{this.props.kelas.id}</Text>
-                <Text>{this.props.kelas.avatar_url}</Text>
+        <Text>{this.props.kelas.avatar_url}</Text>
         <Text>{this.props.kelas.icon}</Text>
         <Text>{this.props.kelas.subtitle}</Text>
         <Text>{this.props.kelas.title}</Text>
